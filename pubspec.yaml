@@ -29,11 +29,15 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
+  intl: ^0.19.0
+  wear_plus: ^1.2.0
+  audioplayers: ^6.1.0
+  cupertino_icons: ^1.0.2
+  wear: ^1.1.0 # Si estás usando la funcionalidad de Wear OS
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  # cupertino_icons: ^1.0.2
+  #
   # connectivity_plus:
   #   path: D:/flutter/plus_plugins/plus_plugins/packages/connectivity_plus/connectivity_plus/
   # device_info_plus:
@@ -85,10 +89,22 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
 flutter:
+
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+
+  # To add assets to your application, add an assets section, like this:
+  assets:
+    - assets/outline_arrow.png
+    - assets/pause_circle_filled.png
+    - assets/play_circle_filled.png
+    - assets/outline_arrow_back_white.png
+    - assets/whistle_time_logo.png
+    - assets/audio/
+    - assets/images/
+    - assets/icons/
 
   # To add assets to your application, add an assets section, like this:
   # assets:
