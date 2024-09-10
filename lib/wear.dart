@@ -57,12 +57,29 @@ class _WatchShapeState extends State<WatchShape> {
 
   Future<Shape> _getShape() async {
     try {
-      final int result = await _channel.invokeMethod('getShape');
-      return result == 1 ? Shape.square : Shape.round;
+      final result = await _channel.invokeMethod('getShape');
+
+      // Si el resultado es un String, intenta convertirlo a int
+      if (result is String) {
+        final int? parsedResult = int.tryParse(result);
+        if (parsedResult != null) {
+          return parsedResult == 1 ? Shape.square : Shape.round;
+        }
+      }
+
+      // Si ya es un int, simplemente lo procesamos
+      if (result is int) {
+        return result == 1 ? Shape.square : Shape.round;
+      }
+
+      // En caso de cualquier otro tipo de dato o conversión fallida, devolvemos el valor por defecto
+      return Shape.round;
     } on PlatformException {
+      // Manejar el caso en el que la llamada a la plataforma falle
       return Shape.round;
     }
   }
+
 
   @override
   Widget build(BuildContext context) => widget.builder(context, shape);

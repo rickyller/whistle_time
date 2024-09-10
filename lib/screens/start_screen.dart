@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'microphone_screen.dart';
 import 'name_screen.dart';
 import '../utils.dart';
 import '../wear.dart';
@@ -45,7 +46,7 @@ class StartScreen extends StatelessWidget {
                     onPressed: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(builder: (context) {
-                          return NameScreen(screenHeight, screenWidth);
+                          return MicrophoneScreen(screenHeight, screenWidth);
                         }),
                       );
                     },
