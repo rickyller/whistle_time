@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'microphone_screen.dart';
-import 'name_screen.dart';
+import 'package:settings/screens/stopWatch_screen.dart'; // Asegúrate de importar StopwatchScreen
+import '../colors.dart';
 import '../utils.dart';
 import '../wear.dart';
-import '../colors.dart';
 
 class StartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.black,  // Usa el color blanco de tu paleta
+      backgroundColor: AppColors.black,  // Fondo negro
       body: WatchShape(
         builder: (context, shape) {
           var screenSize = MediaQuery.of(context).size;
@@ -21,9 +20,12 @@ class StartScreen extends StatelessWidget {
           var screenHeight = screenSize.height;
           var screenWidth = screenSize.width;
 
+          // Definir el PageController que será pasado a StopwatchScreen
+          final PageController pageController = PageController(initialPage: 0);
+
           return Center(
             child: Container(
-              color: AppColors.black,  // Usa el color blanco
+              color: AppColors.black,  // Fondo negro
               height: screenSize.height,
               width: screenSize.width,
               child: Column(
@@ -34,7 +36,7 @@ class StartScreen extends StatelessWidget {
                   SizedBox(height: 10),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.teal,  // Usa el color verde azulado
+                      backgroundColor: AppColors.teal,  // Color verde azulado
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
@@ -44,9 +46,10 @@ class StartScreen extends StatelessWidget {
                       style: TextStyle(color: AppColors.white, fontSize: 16),  // Texto en blanco
                     ),
                     onPressed: () {
+                      // Navegar a StopwatchScreen con PageView, pasando el PageController
                       Navigator.of(context).push(
                         MaterialPageRoute(builder: (context) {
-                          return MicrophoneScreen(screenHeight, screenWidth);
+                          return StopwatchScreen(pageController: pageController); // Pasar el PageController aquí
                         }),
                       );
                     },

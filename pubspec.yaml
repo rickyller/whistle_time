@@ -32,9 +32,13 @@ dependencies:
   intl: ^0.19.0
   wear_plus: ^1.2.0
   audioplayers: ^6.1.0
+  flutter_speed_dial: ^5.0.0+1
+  flutter_colorpicker: ^1.1.0
+  font_awesome_flutter: ^10.1.0  # Check for the latest version
   cupertino_icons: ^1.0.2
   wear: ^1.1.0 # Si estás usando la funcionalidad de Wear OS
   lottie: ^2.0.0
+  stop_watch_timer: ^3.2.1
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   #
@@ -103,13 +107,25 @@ flutter:
     - assets/outline_arrow_back_white.png
     - assets/whistle_time_logo.png
     - assets/microphone_animation.json
+    - assets/micro_blue.json
     - assets/audio/
     - assets/images/
+    - assets/images/background_wt.png
     - assets/icons/
+    - assets/icons/porteria.png
+    - assets/icons/yellow_card.png
+    - assets/icons/red_card.png
+    - assets/icons/bandera.png
+    - assets/icons/timer.png
+
   fonts:
     - family: nud
       fonts:
         - asset: assets/fonts/nud.ttf
+    - family: brave
+      fonts:
+        - asset: assets/fonts/brave.ttf
+
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

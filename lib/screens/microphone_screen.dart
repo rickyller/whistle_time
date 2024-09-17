@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:settings/screens/matchResult_screen.dart';
 import 'package:settings/screens/start_screen.dart';
+import 'package:settings/screens/stopWatch_screen.dart';
 import 'package:wear/wear.dart';
 import 'package:lottie/lottie.dart';
 
@@ -9,8 +10,13 @@ import '../colors.dart'; // Asegúrate de que 'AppColors.darkBlue' esté definid
 class MicrophoneScreen extends StatelessWidget {
   final double screenHeight;
   final double screenWidth;
+  final PageController pageController;
 
-  MicrophoneScreen(this.screenHeight, this.screenWidth);
+  MicrophoneScreen({
+    required this.screenHeight,
+    required this.screenWidth,
+    required this.pageController,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +24,7 @@ class MicrophoneScreen extends StatelessWidget {
       builder: (context, shape, child) {
         return AmbientMode(
           builder: (context, mode, child) => mode == WearMode.active
-              ? MicrophonePageView(screenHeight, screenWidth)
+              ? MicrophonePageView(screenHeight, screenWidth, pageController)
               : AmbientWatchFace(),
         );
       },
@@ -29,8 +35,9 @@ class MicrophoneScreen extends StatelessWidget {
 class MicrophonePageView extends StatefulWidget {
   final double screenHeight;
   final double screenWidth;
+  final PageController pageController;
 
-  MicrophonePageView(this.screenHeight, this.screenWidth);
+  MicrophonePageView(this.screenHeight, this.screenWidth, this.pageController);
 
   @override
   _MicrophonePageViewState createState() => _MicrophonePageViewState();
@@ -38,29 +45,23 @@ class MicrophonePageView extends StatefulWidget {
 
 class _MicrophonePageViewState extends State<MicrophonePageView> {
   bool isRecording = false;
-  final PageController _pageController = PageController(initialPage: 0);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         children: [
-          PageView(
-            controller: _pageController,
-            scrollDirection: Axis.horizontal,
-            children: [
-              MicrophoneScreenUI(
-                screenHeight: widget.screenHeight,
-                screenWidth: widget.screenWidth,
-                isRecording: isRecording,
-                toggleRecording: () {
-                  setState(() {
-                    isRecording = !isRecording;
-                  });
-                },
-              ),
-              MatchResultScreen(MediaQuery.of(context).size.height, MediaQuery.of(context).size.width), // Agregar más pantallas si es necesario
-            ],
+          Center(
+            child: MicrophoneScreenUI(
+              screenHeight: widget.screenHeight,
+              screenWidth: widget.screenWidth,
+              isRecording: isRecording,
+              toggleRecording: () {
+                setState(() {
+                  isRecording = !isRecording;
+                });
+              },
+            ),
           ),
           // Botón flotante en forma de media luna más pequeño y pegado al borde izquierdo
           Positioned(
@@ -68,9 +69,9 @@ class _MicrophonePageViewState extends State<MicrophonePageView> {
             left: 4, // Muy pegado al borde izquierdo
             child: GestureDetector(
               onTap: () {
-                // Retrocede una página si no está en la primera
-                if (_pageController.page != 0) {
-                  _pageController.previousPage(
+                if (widget.pageController.hasClients &&
+                    widget.pageController.page != 0) {
+                  widget.pageController.previousPage(
                     duration: Duration(milliseconds: 300),
                     curve: Curves.easeInOut,
                   );
@@ -100,9 +101,9 @@ class _MicrophonePageViewState extends State<MicrophonePageView> {
             right: 4, // Muy pegado al borde derecho
             child: GestureDetector(
               onTap: () {
-                // Avanza una página si no está en la última
-                if (_pageController.page != _pageController.positions.first.maxScrollExtent) {
-                  _pageController.nextPage(
+                if (widget.pageController.hasClients &&
+                    widget.pageController.page != widget.pageController.positions.first.maxScrollExtent) {
+                  widget.pageController.nextPage(
                     duration: Duration(milliseconds: 300),
                     curve: Curves.easeInOut,
                   );
@@ -161,20 +162,20 @@ class MicrophoneScreenUI extends StatelessWidget {
           height: screenHeight * 1.5, // Ajustando el tamaño para que quede un poco dentro del borde
           width: screenWidth * 1.5, // Ajustando el tamaño para que quede un poco dentro del borde
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start, // Cambiado de center a start para alinear hacia arriba
             children: <Widget>[
+              // Lottie Animation (puedes ajustar su tamaño si es necesario)
               GestureDetector(
                 onTap: toggleRecording,
                 child: Lottie.asset(
                   'assets/microphone_animation.json', // Ruta de tu animación Lottie
                   width: screenWidth * .80,
-                  height: screenWidth * .80,
+                  height: screenWidth * .80, // Ajusta este valor si es necesario
                   repeat: isRecording,
                   animate: isRecording,
                 ),
               ),
-              SizedBox(height: screenHeight * 0.05),
-              // Usamos FittedBox para que el texto se ajuste al espacio disponible
+              SizedBox(height: screenHeight * 0.01), // Reducir este espacio si es necesario
               Flexible(
                 child: FittedBox(
                   fit: BoxFit.scaleDown,
@@ -183,12 +184,12 @@ class MicrophoneScreenUI extends StatelessWidget {
                     key: ValueKey(isRecording), // Clave única para la transición
                     style: TextStyle(
                       fontFamily: 'nud',  // Fuente personalizada
-                      fontSize: screenHeight * 0.075,  // Tamaño ajustado del texto
+                      fontSize: screenHeight * 0.055,  // Tamaño ajustado del texto
                       color: Colors.white, // El color del texto
                       fontWeight: FontWeight.w600,  // Peso de la fuente
                       shadows: [
                         Shadow(
-                          blurRadius: 10.0,
+                          blurRadius: 6.0,
                           color: Colors.black.withOpacity(0.5),
                           offset: Offset(2, 2),
                         ),
@@ -200,6 +201,7 @@ class MicrophoneScreenUI extends StatelessWidget {
               ),
             ],
           ),
+
         ),
       ),
     );
