@@ -1,3 +1,5 @@
+//import 'dart:nativewrappers/_internal/vm/lib/internal_patch.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -25,17 +27,53 @@ class FigmaToCodeApp extends StatelessWidget {
   }
 }
 
-class SignUp extends StatelessWidget {
+class SignUp extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return Column(
+  _SignUpState createState() => _SignUpState();
+}
+class _SignUpState extends State<SignUp> {
+final _formKey = GlobalKey<FormState>();
+final _nameController = TextEditingController();
+final _emailController = TextEditingController();
+final _passwordController = TextEditingController();
+
+void _register() {
+  if (_formKey.currentState!.validate()) {
+    // Handle the registration logic, e.g., calling an API.
+    // For this example, let's just print to the console.
+    print("Registering user:");
+    print("Name: ${_nameController.text}");
+    print("Email: ${_emailController.text}");
+    print("Password: ${_passwordController.text}");
+    // Clear the fields after registration
+    _nameController.clear();
+    _emailController.clear();
+    _passwordController.clear();
+  }
+}
+void _registerWithGoogle() {
+  // Handle Google sign-in here, using Firebase or any other method.
+  print("Register with Google");
+}
+
+@override
+void dispose() {
+  _nameController.dispose();
+  _emailController.dispose();
+  _passwordController.dispose();
+  super.dispose();
+}
+
+@override
+Widget build(BuildContext context) {
+  return Column(
       children: [
         Container(
           width: 390,
           height: 844,
           clipBehavior: Clip.antiAlias,
           decoration: ShapeDecoration(
-            color: Color(0xFFF5FBF6),
+            color: const Color(0xFFF5FBF6),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(50),
             ),
@@ -49,7 +87,7 @@ class SignUp extends StatelessWidget {
                   width: 390,
                   height: 568,
                   decoration: ShapeDecoration(
-                    color: Color(0xFFDEE4DF),
+                    color: const Color(0xFFDEE4DF),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(50),
                     ),
@@ -63,7 +101,7 @@ class SignUp extends StatelessWidget {
                   width: 390,
                   height: 496,
                   decoration: ShapeDecoration(
-                    color: Color(0xFFEFF5F0),
+                    color: const Color(0xFFEFF5F0),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(50),
                     ),
@@ -74,25 +112,28 @@ class SignUp extends StatelessWidget {
               Positioned(
                 left: 50,
                 top: 672,
-                child: Container(
-                  width: 290,
-                  height: 56,
-                  child: Center(
-                    child: Text(
-                      'Registrate',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontFamily: 'Roboto',
-                        fontWeight: FontWeight.w400,
-                        letterSpacing: 0.5,
+                child :GestureDetector(
+                  onTap: _register,
+                  child: Container(
+                    width: 290,
+                    height: 56,
+                    child: const Center(
+                      child: Text(
+                        'Registrate',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontFamily: 'Roboto',
+                          fontWeight: FontWeight.w400,
+                          letterSpacing: 0.5,
+                        ),
                       ),
                     ),
-                  ),
-                  decoration: BoxDecoration(
-                    color: Color(0xFF136B55),
-                    borderRadius: BorderRadius.circular(15),
+                    decoration: BoxDecoration(
+                      color: Color(0xFF136B55),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
                   ),
                 ),
               ),
@@ -100,33 +141,36 @@ class SignUp extends StatelessWidget {
               Positioned(
                 left: 50,
                 top: 738,
-                child: Container(
-                  width: 290,
-                  height: 56,
-                  decoration: BoxDecoration(
-                    color: Color(0xFFA3F2D7),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SvgPicture.asset(
-                        'assets/icons_smartphone/Google.svg',
-                        width: 24,
-                        height: 24,
-                      ),
-                      const SizedBox(width: 10),
-                      const Text(
-                        'Registrate con Google',
-                        style: TextStyle(
-                          color: Color(0xFF002118),
-                          fontSize: 16,
-                          fontFamily: 'Roboto',
-                          fontWeight: FontWeight.w400,
-                          letterSpacing: 0.5,
+                child: GestureDetector(
+                  onTap: _registerWithGoogle,
+                  child: Container(
+                    width: 290,
+                    height: 56,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFA3F2D7),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SvgPicture.asset(
+                          'assets/icons_smartphone/Google.svg',
+                          width: 24,
+                          height: 24,
                         ),
-                      ),
-                    ],
+                        const SizedBox(width: 10),
+                        const Text(
+                          'Registrate con Google',
+                          style: TextStyle(
+                            color: Color(0xFF002118),
+                            fontSize: 16,
+                            fontFamily: 'Roboto',
+                            fontWeight: FontWeight.w400,
+                            letterSpacing: 0.5,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -156,13 +200,18 @@ class SignUp extends StatelessWidget {
                 child: Container(
                   width: 150,
                   height: 150,
-                  decoration: ShapeDecoration(
+                  child: SvgPicture.asset(
+                    'assets/logo/whistleTime - logo sin letras.svg',
+                    height: 50,
+                    width: 50,
+                  ),
+                  decoration: const ShapeDecoration(
                     color: Color(0xFFDEE4DF),
                     shape: OvalBorder(),
                   ),
                 ),
               ),
-              Positioned(
+              const Positioned(
                 left: 92,
                 top: 296,
                 child: Text(
@@ -179,19 +228,22 @@ class SignUp extends StatelessWidget {
               Positioned(
                 left: 45,
                 top: 398,
-                child: Container(
-                  width: 300,
-                  child: Column(
-                    children: [
-                      // Campo "Nombre completo"
-                      _buildFormField('Nombre completo'),
-                      const SizedBox(height: 10),
-                      // Campo "Email"
-                      _buildFormField('Email'),
-                      const SizedBox(height: 10),
-                      // Campo "Contraseña"
-                      _buildFormField('Contraseña'),
-                    ],
+                child: Form(
+                  key: _formKey,
+                  child: Container(
+                    width: 300,
+                    child: Column(
+                      children: [
+                        // Campo "Nombre completo"
+                        _buildFormField('Nombre completo', _nameController),
+                        const SizedBox(height: 10),
+                        // Campo "Email"
+                        _buildFormField('Email', _emailController),
+                        const SizedBox(height: 10),
+                        // Campo "Contraseña"
+                        _buildFormField('Contraseña', _passwordController, isPassword:  true),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -203,7 +255,7 @@ class SignUp extends StatelessWidget {
   }
 
   // Función para construir campos de formulario reutilizables
-  Widget _buildFormField(String labelText) {
+  Widget _buildFormField(String labelText, TextEditingController controller, {bool isPassword = false}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -218,12 +270,33 @@ class SignUp extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 5),
-        Container(
+        SizedBox(
           width: 300,
           height: 50,
-          decoration: BoxDecoration(
-            color: Color(0xFFD9D9D9),
-            borderRadius: BorderRadius.circular(10),
+          child: TextFormField(
+            controller: controller,
+            obscureText: isPassword,
+            style: const TextStyle(
+              color: Colors.black,
+              fontSize: 14,
+              fontFamily: 'Roboto',
+              fontWeight: FontWeight.w400,
+              letterSpacing: 0.25,
+            ),
+            decoration: InputDecoration(
+              filled: true,
+              fillColor: const Color(0xFFD9D9D9),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide.none
+              ),
+            ),
+            validator: (value){
+              if (value == null || value.isEmpty){
+                return 'Este campo es obligatorio';
+              }
+              return null;
+            },
           ),
         ),
       ],

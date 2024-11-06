@@ -109,6 +109,7 @@ flutter:
     - assets/icons_smartphone/
     - assets/icons_watch/
     - assets/animations_smartphone/
+    - assets/logo/
 
 
   fonts:
