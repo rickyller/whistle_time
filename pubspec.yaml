@@ -106,6 +106,7 @@ flutter:
     - assets/micro_blue.json
     - assets/audio/
     - assets/images/
+    - assets/logo/
     - assets/icons_smartphone/
     - assets/icons_watch/
     - assets/animations_smartphone/

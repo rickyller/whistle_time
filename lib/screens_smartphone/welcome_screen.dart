@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 void main() {
   runApp(const FigmaToCodeApp());
@@ -59,13 +60,10 @@ class Welcome extends StatelessWidget {
               Positioned(
                 left: 120,
                 top: 287,
-                child: Container(
+                child: SvgPicture.asset(
+                  'assets/logo/whistleTime_sinLetras.svg',
                   width: 150,
                   height: 150,
-                  decoration: ShapeDecoration(
-                    color: Color(0xFFDEE4DF),
-                    shape: OvalBorder(),
-                  ),
                 ),
               ),
               Positioned(
@@ -107,9 +105,9 @@ class Welcome extends StatelessWidget {
                       ),
                       Positioned(
                         left: 116.40,
-                        top: 16,
+                        top: 24,
                         child: SizedBox(
-                          width: 59.20,
+                          width: 59.20415,
                           child: Text(
                             'Ingresa',
                             textAlign: TextAlign.center,
@@ -152,9 +150,9 @@ class Welcome extends StatelessWidget {
                       ),
                       Positioned(
                         left: 105.36,
-                        top: 16,
+                        top: 24,
                         child: SizedBox(
-                          width: 80.28,
+                          width: 80.27682,
                           child: Text(
                             'Registrate',
                             textAlign: TextAlign.center,
