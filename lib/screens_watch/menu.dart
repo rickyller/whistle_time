@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:settings/colors.dart';
-import 'package:settings/screens%20refapp/final.dart';
-import 'package:settings/screens%20refapp/red_cards.dart';
-import 'package:settings/screens%20refapp/subs.dart';
-import 'package:settings/screens%20refapp/timer.dart';
-import 'package:settings/screens%20refapp/yellow_cards.dart';
+import 'package:settings/screens_watch/final.dart';
+import 'package:settings/screens_watch/red_cards.dart';
+import 'package:settings/screens_watch/subs.dart';
+import 'package:settings/screens_watch/timer.dart';
+import 'package:settings/screens_watch/yellow_cards.dart';
+
 import 'goal.dart'; // Importa la pantalla GoalScreen
 
 void main() {
@@ -85,7 +86,7 @@ class HomeScreen extends StatelessWidget {
                                   width: 70,
                                   height: 70,
                                   child: Image.asset(
-                                    'assets/icons/porteria.png',
+                                    'assets/icons_watch/porteria.png',
                                     fit: BoxFit.contain,
                                   ),
                                 ),
@@ -102,7 +103,7 @@ class HomeScreen extends StatelessWidget {
                                     width: 26,
                                     height: 26,
                                     child: Image.asset(
-                                      'assets/icons/yellow_card.png',
+                                      'assets/icons_watch/yellow_card.png',
                                       fit: BoxFit.contain,
                                     ),
                                   ),
@@ -127,7 +128,7 @@ class HomeScreen extends StatelessWidget {
                                     width: 27,
                                     height: 27,
                                     child: Image.asset(
-                                      'assets/icons/red_card.png',
+                                      'assets/icons_watch/red_card.png',
                                       fit: BoxFit.contain,
                                     ),
                                   ),
@@ -143,7 +144,7 @@ class HomeScreen extends StatelessWidget {
                                   width: 60,
                                   height: 60,
                                   child: Image.asset(
-                                    'assets/icons/bandera.png',
+                                    'assets/icons_watch/bandera.png',
                                     fit: BoxFit.contain,
                                   ),
                                 ),
@@ -163,7 +164,7 @@ class HomeScreen extends StatelessWidget {
                             width: 50,
                             height: 50,
                             child: Image.asset(
-                              'assets/icons/timer.png',
+                              'assets/icons_watch/timer.png',
                               fit: BoxFit.contain,
                             ),
                           ),
