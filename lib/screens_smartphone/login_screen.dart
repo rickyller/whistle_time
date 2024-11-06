@@ -23,7 +23,37 @@ class FigmaToCodeApp extends StatelessWidget {
   }
 }
 
-class LogIn extends StatelessWidget {
+class LogIn extends StatefulWidget {
+  @override
+  _LogInState createState() => _LogInState();
+}
+
+class _LogInState extends State<LogIn> {
+  final _formKey = GlobalKey<FormState>();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  void _login() {
+    if (_formKey.currentState!.validate()) {
+      print("Logging in user:");
+      print("Email: ${_emailController.text}");
+      print("Password: ${_passwordController.text}");
+      _emailController.clear();
+      _passwordController.clear();
+    }
+  }
+
+  void _loginWithGoogle() {
+    print("Login with Google");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -67,9 +97,7 @@ class LogIn extends StatelessWidget {
                 left: 50,
                 top: 617,
                 child: ElevatedButton(
-                  onPressed: () {
-                    // Acción del botón de "Ingresa"
-                  },
+                  onPressed: _login,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xFF136B55),
                     minimumSize: Size(290, 56),
@@ -93,9 +121,7 @@ class LogIn extends StatelessWidget {
                 left: 50,
                 top: 738,
                 child: ElevatedButton(
-                  onPressed: () {
-                    // Acción del botón de "Ingresa con Google"
-                  },
+                  onPressed: _loginWithGoogle,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xFFA3F2D7),
                     minimumSize: Size(290, 56),
@@ -143,34 +169,18 @@ class LogIn extends StatelessWidget {
               Positioned(
                 left: 45,
                 top: 398,
-                child: Container(
-                  width: 300,
-                  height: 159,
-                  child: Column(
-                    children: [
-                      TextFormField(
-                        decoration: InputDecoration(
-                          labelText: 'Email',
-                          fillColor: Color(0xFFD9D9D9),
-                          filled: true,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 20),
-                      TextFormField(
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          labelText: 'Contraseña',
-                          fillColor: Color(0xFFD9D9D9),
-                          filled: true,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                      ),
-                    ],
+                child: Form(
+                  key: _formKey,
+                  child: Container(
+                    width: 300,
+                    child: Column(
+                      children: [
+                        _buildFormField('Email', _emailController),
+                        const SizedBox(height: 20),
+                        _buildFormField('Contraseña', _passwordController,
+                            isPassword: true),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -209,6 +219,55 @@ class LogIn extends StatelessWidget {
                 ),
               ),
             ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  // Función para construir campos de formulario reutilizables
+  Widget _buildFormField(String labelText, TextEditingController controller,
+      {bool isPassword = false}) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          labelText,
+          style: const TextStyle(
+            color: Colors.black,
+            fontSize: 14,
+            fontFamily: 'Roboto',
+            fontWeight: FontWeight.w400,
+            letterSpacing: 0.25,
+          ),
+        ),
+        const SizedBox(height: 5),
+        SizedBox(
+          width: 300,
+          height: 50,
+          child: TextFormField(
+            controller: controller,
+            obscureText: isPassword,
+            style: const TextStyle(
+              color: Colors.black,
+              fontSize: 14,
+              fontFamily: 'Roboto',
+              fontWeight: FontWeight.w400,
+              letterSpacing: 0.25,
+            ),
+            decoration: InputDecoration(
+              filled: true,
+              fillColor: const Color(0xFFD9D9D9),
+              border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide.none),
+            ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Este campo es obligatorio';
+              }
+              return null;
+            },
           ),
         ),
       ],

@@ -23,7 +23,15 @@ class FigmaToCodeApp extends StatelessWidget {
   }
 }
 
-class Welcome extends StatelessWidget {
+class Welcome extends StatefulWidget {
+  @override
+  _WelcomeState createState() => _WelcomeState();
+}
+
+class _WelcomeState extends State<Welcome> {
+  bool _isHoveredIngresar = false;
+  bool _isHoveredRegistrar = false;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -40,6 +48,7 @@ class Welcome extends StatelessWidget {
           ),
           child: Stack(
             children: [
+              // Fondo verde en la parte superior
               Positioned(
                 left: 0,
                 top: 0,
@@ -57,6 +66,7 @@ class Welcome extends StatelessWidget {
                   ),
                 ),
               ),
+              // Logo de la aplicación
               Positioned(
                 left: 120,
                 top: 287,
@@ -66,6 +76,7 @@ class Welcome extends StatelessWidget {
                   height: 150,
                 ),
               ),
+              // Título de la aplicación
               Positioned(
                 left: 86,
                 top: 474,
@@ -77,97 +88,83 @@ class Welcome extends StatelessWidget {
                     fontSize: 32,
                     fontFamily: 'Roboto',
                     fontWeight: FontWeight.w700,
-                    height: 0.04,
+                    height: 1.2,
                   ),
                 ),
               ),
+              // Botón "Ingresa" con animación de hover
               Positioned(
                 left: 50,
                 top: 672,
-                child: Container(
-                  width: 290,
-                  height: 56,
-                  child: Stack(
-                    children: [
-                      Positioned(
-                        left: 0,
-                        top: 0,
-                        child: Container(
-                          width: 290,
-                          height: 56,
-                          decoration: ShapeDecoration(
-                            color: Color(0xFF136B55),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                          ),
+                child: MouseRegion(
+                  onEnter: (_) {
+                    setState(() {
+                      _isHoveredIngresar = true;
+                    });
+                  },
+                  onExit: (_) {
+                    setState(() {
+                      _isHoveredIngresar = false;
+                    });
+                  },
+                  child: AnimatedContainer(
+                    duration: Duration(milliseconds: 200),
+                    width: 290,
+                    height: 56,
+                    decoration: BoxDecoration(
+                      color: _isHoveredIngresar ? Color(0xFF0F553D) : Color(0xFF136B55),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Ingresa',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontFamily: 'Roboto',
+                          fontWeight: FontWeight.w400,
+                          letterSpacing: 0.5,
                         ),
                       ),
-                      Positioned(
-                        left: 116.40,
-                        top: 24,
-                        child: SizedBox(
-                          width: 59.20415,
-                          child: Text(
-                            'Ingresa',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontFamily: 'Roboto',
-                              fontWeight: FontWeight.w400,
-                              height: 0.09,
-                              letterSpacing: 0.50,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
                 ),
               ),
+              // Botón "Regístrate" con animación de hover
               Positioned(
                 left: 50,
                 top: 738,
-                child: Container(
-                  width: 290,
-                  height: 56,
-                  child: Stack(
-                    children: [
-                      Positioned(
-                        left: 0,
-                        top: 0,
-                        child: Container(
-                          width: 290,
-                          height: 56,
-                          decoration: ShapeDecoration(
-                            color: Color(0xFFA3F2D7),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                          ),
+                child: MouseRegion(
+                  onEnter: (_) {
+                    setState(() {
+                      _isHoveredRegistrar = true;
+                    });
+                  },
+                  onExit: (_) {
+                    setState(() {
+                      _isHoveredRegistrar = false;
+                    });
+                  },
+                  child: AnimatedContainer(
+                    duration: Duration(milliseconds: 200),
+                    width: 290,
+                    height: 56,
+                    decoration: BoxDecoration(
+                      color: _isHoveredRegistrar ? Color(0xFF91E8C6) : Color(0xFFA3F2D7),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Regístrate',
+                        style: TextStyle(
+                          color: Color(0xFF002118),
+                          fontSize: 16,
+                          fontFamily: 'Roboto',
+                          fontWeight: FontWeight.w400,
+                          letterSpacing: 0.5,
                         ),
                       ),
-                      Positioned(
-                        left: 105.36,
-                        top: 24,
-                        child: SizedBox(
-                          width: 80.27682,
-                          child: Text(
-                            'Registrate',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Color(0xFF002118),
-                              fontSize: 16,
-                              fontFamily: 'Roboto',
-                              fontWeight: FontWeight.w400,
-                              height: 0.09,
-                              letterSpacing: 0.50,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
                 ),
               ),

@@ -1,5 +1,3 @@
-//import 'dart:nativewrappers/_internal/vm/lib/internal_patch.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -31,42 +29,40 @@ class SignUp extends StatefulWidget {
   @override
   _SignUpState createState() => _SignUpState();
 }
+
 class _SignUpState extends State<SignUp> {
-final _formKey = GlobalKey<FormState>();
-final _nameController = TextEditingController();
-final _emailController = TextEditingController();
-final _passwordController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  final _nameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
 
-void _register() {
-  if (_formKey.currentState!.validate()) {
-    // Handle the registration logic, e.g., calling an API.
-    // For this example, let's just print to the console.
-    print("Registering user:");
-    print("Name: ${_nameController.text}");
-    print("Email: ${_emailController.text}");
-    print("Password: ${_passwordController.text}");
-    // Clear the fields after registration
-    _nameController.clear();
-    _emailController.clear();
-    _passwordController.clear();
+  void _register() {
+    if (_formKey.currentState!.validate()) {
+      print("Registering user:");
+      print("Name: ${_nameController.text}");
+      print("Email: ${_emailController.text}");
+      print("Password: ${_passwordController.text}");
+      _nameController.clear();
+      _emailController.clear();
+      _passwordController.clear();
+    }
   }
-}
-void _registerWithGoogle() {
-  // Handle Google sign-in here, using Firebase or any other method.
-  print("Register with Google");
-}
 
-@override
-void dispose() {
-  _nameController.dispose();
-  _emailController.dispose();
-  _passwordController.dispose();
-  super.dispose();
-}
+  void _registerWithGoogle() {
+    print("Register with Google");
+  }
 
-@override
-Widget build(BuildContext context) {
-  return Column(
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
       children: [
         Container(
           width: 390,
@@ -112,14 +108,18 @@ Widget build(BuildContext context) {
               Positioned(
                 left: 50,
                 top: 672,
-                child :GestureDetector(
+                child: GestureDetector(
                   onTap: _register,
                   child: Container(
                     width: 290,
                     height: 56,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF136B55),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
                     child: const Center(
                       child: Text(
-                        'Registrate',
+                        'Regístrate',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Colors.white,
@@ -129,10 +129,6 @@ Widget build(BuildContext context) {
                           letterSpacing: 0.5,
                         ),
                       ),
-                    ),
-                    decoration: BoxDecoration(
-                      color: Color(0xFF136B55),
-                      borderRadius: BorderRadius.circular(15),
                     ),
                   ),
                 ),
@@ -160,7 +156,7 @@ Widget build(BuildContext context) {
                         ),
                         const SizedBox(width: 10),
                         const Text(
-                          'Registrate con Google',
+                          'Regístrate con Google',
                           style: TextStyle(
                             color: Color(0xFF002118),
                             fontSize: 16,
@@ -194,21 +190,14 @@ Widget build(BuildContext context) {
                   ),
                 ),
               ),
+              // Logo sin el círculo detrás
               Positioned(
                 left: 120,
                 top: 80,
-                child: Container(
-                  width: 150,
+                child: SvgPicture.asset(
+                  'assets/logo/whistleTime_sinLetras.svg',
                   height: 150,
-                  child: SvgPicture.asset(
-                    'assets/logo/whistleTime - logo sin letras.svg',
-                    height: 50,
-                    width: 50,
-                  ),
-                  decoration: const ShapeDecoration(
-                    color: Color(0xFFDEE4DF),
-                    shape: OvalBorder(),
-                  ),
+                  width: 150,
                 ),
               ),
               const Positioned(
@@ -241,7 +230,8 @@ Widget build(BuildContext context) {
                         _buildFormField('Email', _emailController),
                         const SizedBox(height: 10),
                         // Campo "Contraseña"
-                        _buildFormField('Contraseña', _passwordController, isPassword:  true),
+                        _buildFormField('Contraseña', _passwordController,
+                            isPassword: true),
                       ],
                     ),
                   ),
@@ -255,7 +245,8 @@ Widget build(BuildContext context) {
   }
 
   // Función para construir campos de formulario reutilizables
-  Widget _buildFormField(String labelText, TextEditingController controller, {bool isPassword = false}) {
+  Widget _buildFormField(String labelText, TextEditingController controller,
+      {bool isPassword = false}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -287,12 +278,11 @@ Widget build(BuildContext context) {
               filled: true,
               fillColor: const Color(0xFFD9D9D9),
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide.none
-              ),
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide.none),
             ),
-            validator: (value){
-              if (value == null || value.isEmpty){
+            validator: (value) {
+              if (value == null || value.isEmpty) {
                 return 'Este campo es obligatorio';
               }
               return null;
