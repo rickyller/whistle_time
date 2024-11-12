@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:settings/screens/stopWatch_screen.dart'; // Asegúrate de importar StopwatchScreen
+import 'package:settings/screens_extra/stopWatch_screen.dart'; // Asegúrate de importar StopwatchScreen
 import '../colors.dart';
 import '../utils.dart';
 import '../wear.dart';

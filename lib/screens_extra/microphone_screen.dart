@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:settings/screens/matchResult_screen.dart';
-import 'package:settings/screens/start_screen.dart';
-import 'package:settings/screens/stopWatch_screen.dart';
+import 'package:settings/screens_extra/matchResult_screen.dart';
+import 'package:settings/screens_extra/start_screen.dart';
+import 'package:settings/screens_extra/stopWatch_screen.dart';
 import 'package:wear/wear.dart';
 import 'package:lottie/lottie.dart';
 

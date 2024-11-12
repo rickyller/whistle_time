@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../themes/theme.dart';
+import '../constants/strings.dart'; // Importa el archivo strings.dart
 
 void main() {
   runApp(const FigmaToCodeApp());
@@ -11,19 +13,21 @@ class FigmaToCodeApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData.dark().copyWith(
-        scaffoldBackgroundColor: const Color.fromARGB(255, 18, 32, 47),
-      ),
+      theme: AppTheme(Theme.of(context).textTheme).light(), // Utiliza el tema definido en theme.dart
       home: Scaffold(
-        body: ListView(children: [
-          Welcome(),
-        ]),
+        body: ListView(
+          children: const [
+            Welcome(),
+          ],
+        ),
       ),
     );
   }
 }
 
 class Welcome extends StatefulWidget {
+  const Welcome({super.key});
+
   @override
   _WelcomeState createState() => _WelcomeState();
 }
@@ -34,6 +38,12 @@ class _WelcomeState extends State<Welcome> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final primaryColor = theme.colorScheme.primary;
+    final secondaryContainerColor = theme.colorScheme.secondaryContainer;
+    final onPrimaryColor = theme.colorScheme.onPrimary;
+    final onSecondaryColor = theme.colorScheme.onSecondary;
+
     return Column(
       children: [
         Container(
@@ -41,7 +51,7 @@ class _WelcomeState extends State<Welcome> {
           height: 844,
           clipBehavior: Clip.antiAlias,
           decoration: ShapeDecoration(
-            color: Color(0xFFF5FBF6),
+            color: theme.scaffoldBackgroundColor,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(50),
             ),
@@ -56,8 +66,8 @@ class _WelcomeState extends State<Welcome> {
                   width: 390,
                   height: 362,
                   decoration: ShapeDecoration(
-                    color: Color(0xFF136B55),
-                    shape: RoundedRectangleBorder(
+                    color: primaryColor,
+                    shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(100),
                         bottomRight: Radius.circular(100),
@@ -81,14 +91,11 @@ class _WelcomeState extends State<Welcome> {
                 left: 86,
                 top: 474,
                 child: Text(
-                  'WHISTLE TIME',
+                  AppStrings.welcomeTitle,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Color(0xFF136B55),
-                    fontSize: 32,
-                    fontFamily: 'Roboto',
+                  style: theme.textTheme.headlineMedium!.copyWith(
+                    color: primaryColor,
                     fontWeight: FontWeight.w700,
-                    height: 1.2,
                   ),
                 ),
               ),
@@ -97,33 +104,21 @@ class _WelcomeState extends State<Welcome> {
                 left: 50,
                 top: 672,
                 child: MouseRegion(
-                  onEnter: (_) {
-                    setState(() {
-                      _isHoveredIngresar = true;
-                    });
-                  },
-                  onExit: (_) {
-                    setState(() {
-                      _isHoveredIngresar = false;
-                    });
-                  },
+                  onEnter: (_) => setState(() => _isHoveredIngresar = true),
+                  onExit: (_) => setState(() => _isHoveredIngresar = false),
                   child: AnimatedContainer(
-                    duration: Duration(milliseconds: 200),
+                    duration: const Duration(milliseconds: 200),
                     width: 290,
                     height: 56,
                     decoration: BoxDecoration(
-                      color: _isHoveredIngresar ? Color(0xFF0F553D) : Color(0xFF136B55),
+                      color: _isHoveredIngresar ? primaryColor.withOpacity(0.8) : primaryColor,
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: Center(
                       child: Text(
-                        'Ingresa',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontFamily: 'Roboto',
-                          fontWeight: FontWeight.w400,
-                          letterSpacing: 0.5,
+                        AppStrings.loginButton,
+                        style: theme.textTheme.labelLarge!.copyWith(
+                          color: onPrimaryColor,
                         ),
                       ),
                     ),
@@ -135,33 +130,21 @@ class _WelcomeState extends State<Welcome> {
                 left: 50,
                 top: 738,
                 child: MouseRegion(
-                  onEnter: (_) {
-                    setState(() {
-                      _isHoveredRegistrar = true;
-                    });
-                  },
-                  onExit: (_) {
-                    setState(() {
-                      _isHoveredRegistrar = false;
-                    });
-                  },
+                  onEnter: (_) => setState(() => _isHoveredRegistrar = true),
+                  onExit: (_) => setState(() => _isHoveredRegistrar = false),
                   child: AnimatedContainer(
-                    duration: Duration(milliseconds: 200),
+                    duration: const Duration(milliseconds: 200),
                     width: 290,
                     height: 56,
                     decoration: BoxDecoration(
-                      color: _isHoveredRegistrar ? Color(0xFF91E8C6) : Color(0xFFA3F2D7),
+                      color: _isHoveredRegistrar ? secondaryContainerColor.withOpacity(0.8) : secondaryContainerColor,
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: Center(
                       child: Text(
-                        'Regístrate',
-                        style: TextStyle(
-                          color: Color(0xFF002118),
-                          fontSize: 16,
-                          fontFamily: 'Roboto',
-                          fontWeight: FontWeight.w400,
-                          letterSpacing: 0.5,
+                        AppStrings.registerButton,
+                        style: theme.textTheme.labelLarge!.copyWith(
+                          color: onSecondaryColor,
                         ),
                       ),
                     ),
