@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1029243904025",
+    "project_id": "whistle-time-7cc21",
+    "storage_bucket": "whistle-time-7cc21.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1029243904025:android:1ae58e7be68624d5ed8a88",
+        "android_client_info": {
+          "package_name": "com.example.flutter_tricks"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAKM1lXRRN5ge3NDV8StR80V1qN94BRwkE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
