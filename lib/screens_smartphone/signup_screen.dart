@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:settings/Components/custom_button.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const FigmaToCodeApp());
 }
 
@@ -36,20 +42,69 @@ class _SignUpState extends State<SignUp> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
-  void _register() {
+  void _register() async {
     if (_formKey.currentState!.validate()) {
-      print("Registering user:");
-      print("Name: ${_nameController.text}");
-      print("Email: ${_emailController.text}");
-      print("Password: ${_passwordController.text}");
-      _nameController.clear();
-      _emailController.clear();
-      _passwordController.clear();
+      try {
+        // Register user with Firebase Authentication
+        UserCredential userCredential = await FirebaseAuth.instance
+            .createUserWithEmailAndPassword(
+          email: _emailController.text,
+          password: _passwordController.text,
+        );
+
+        // You can store the name in Firestore or other places
+        User? user = userCredential.user;
+        if (user != null) {
+          // Optionally, update user display name in Firebase
+          await user.updateDisplayName(_nameController.text);
+          await user.reload();
+          user = FirebaseAuth.instance.currentUser;
+          print("User registered successfully: ${user?.displayName}");
+        }
+
+        // Clear fields after registration
+        _nameController.clear();
+        _emailController.clear();
+        _passwordController.clear();
+      } on FirebaseAuthException catch (e) {
+        // Handle error
+        print("Error: ${e.message}");
+      }
     }
   }
 
-  void _registerWithGoogle() {
-    print("Register with Google");
+  void _registerWithGoogle() async {
+    try {
+      // Trigger the Google Sign-In flow
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      if (googleUser == null) {
+        print("Sign-In aborted by user");
+        return;
+      }
+
+      // Obtain the Google Sign-In authentication details
+      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+
+      // Create a credential for Firebase authentication
+      final OAuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      // Sign in to Firebase with the Google credential
+      UserCredential userCredential =
+      await FirebaseAuth.instance.signInWithCredential(credential);
+
+      // Optionally, retrieve user details
+      User? user = userCredential.user;
+      if (user != null) {
+        print("Google Sign-In successful: ${user.displayName}");
+      }
+    } on FirebaseAuthException catch (e) {
+      print("Firebase Auth Exception: ${e.message}");
+    } catch (e) {
+      print("Error during Google Sign-In: $e");
+    }
   }
 
   @override
@@ -108,7 +163,7 @@ class _SignUpState extends State<SignUp> {
               Positioned(
                 left: 50,
                 top: 672,
-                child: GestureDetector(
+                /*child: GestureDetector(
                   onTap: _register,
                   child: Container(
                     width: 290,
@@ -131,7 +186,8 @@ class _SignUpState extends State<SignUp> {
                       ),
                     ),
                   ),
-                ),
+                ),*/
+                child: CustomButton(text: "Registrate", onPressed: _register),
               ),
               // Botón "Regístrate con Google" con ícono de Google
               Positioned(

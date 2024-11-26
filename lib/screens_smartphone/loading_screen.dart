@@ -51,7 +51,7 @@ class Loading extends StatelessWidget {
               width: screenWidth * 0.4,
               height: screenWidth * 0.4,
               child: Lottie.asset(
-                'animations_smartphone/loading_animation.json',
+                'assets/animations_smartphone/loading_animation.json',
                 fit: BoxFit.contain,
               ),
             ),
