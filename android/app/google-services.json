@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "[projectNumber]",
+    "project_id": "[projectId]",
+    "storage_bucket": "[storageBucket]"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "[mobilesdk_app_id]",
+        "android_client_info": {
+          "package_name": "com.example.flutter_tricks"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "[X-API-key]"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
